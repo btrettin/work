@@ -1,0 +1,1 @@
+/usr/bin/clang -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/assignment0.dir/tour.c.o  -o assignment0 

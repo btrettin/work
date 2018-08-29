@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ben/Desktop/327/assignment1/map.c
+stdbool.h
+-
+string.h
+-
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+math.h
+-
+
