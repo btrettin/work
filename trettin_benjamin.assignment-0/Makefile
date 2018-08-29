@@ -1,5 +1,7 @@
-all:
-	gcc -o assignment0 tour.c
+all: tour
+
+tour: tour.c
+	gcc -Wall -Werror -g tour.c -o tour
 
 clean:
-	$(RM) -r $(BUILD_DIR)
+	rm -f tour
