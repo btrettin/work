@@ -5,14 +5,13 @@ Assignment0 - The Knights Tour
 SETUP
 -----
 
-The 'makefile' is located in the build directory so you will need to go inside of it to run make.
+Run make in the assignment0 directory to build the project.
 
 
 Running Source Code
 -------------------
 
-The source code is located inside of the tour.c file and can be run inside the build directory 
-with the ./assignment0 command.
+The source code is located inside of the tour.c file and can be run with the ./assignment0 command.
 
 
 
