@@ -1,5 +1,2 @@
-all: tour.c 
- 	  gcc -g -Wall -o tour tour.c
-
-  clean: 
-	  $(RM) tour
+all:
+	gcc -o assignment0 tour.c

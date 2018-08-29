@@ -25,11 +25,11 @@ void Tour(int x, int y, int position)
 {
     explored[x][y] = position;
 
-    //Prints a single tour if all squares are explored 
+    //Prints a single tour if all squares are explored
     if (position >= N*N){
         for (int i=0; i<N; i++){
             for (int j=0; j<N; j++){
-                singleTour[(explored[i][j])-1] = (5*i)+j+1;  
+                singleTour[(explored[i][j])-1] = (5*i)+j+1;
             }
         }
          for (int i = 0; i < 25; i++){
@@ -42,7 +42,7 @@ void Tour(int x, int y, int position)
         explored[x][y] = 0;
         return;
     }
- 
+
     //Calls tour if it is a valid and unexplored square
     for (int k=0; k<8; k++){
         int xNew = x + row[k];
