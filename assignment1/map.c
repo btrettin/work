@@ -10,16 +10,19 @@
 #define floor '.'
 #define rock ' '
 #define cooridor '#'
+#define pc '@'
 #define horizontalWall '-'
 #define verticalWall '|'
 
-
+int hardnessArray[X][Y];
 char mapArray[X][Y];
 struct room{
     int cornerArray[2][2];
     int connected;
 };
 struct room rooms[10];
+int pcStartX;
+int pcStartY;
 
 void generateRoom(int roomNumber){
     int upperX = 79;
@@ -50,10 +53,13 @@ void generateRoom(int roomNumber){
      for(int i=randY+randHeight-1; i>randY-1; i--){
        for(int j=randX; j<randX+randWidth; j++){
             mapArray[i][j] = floor;
+            hardnessArray[i][j] = 0;
        }
      }
-   // char number = roomNumber + '0' ;
-   // mapArray[randY][randX] = number;
+    if(roomNumber == 0){
+      pcStartX = randX;
+      pcStartY = randY;
+    }
     rooms[roomNumber].cornerArray[0][0] = randX;
     rooms[roomNumber].cornerArray[0][1] = randY;
     rooms[roomNumber].cornerArray[1][0] = randX+randWidth-1;
@@ -68,30 +74,12 @@ void connectRooms(int startRoom ,int endRoom){
     int xEnd = rooms[endRoom].cornerArray[randEnd][0];
     int yEnd = rooms[endRoom].cornerArray[randEnd][1];
 
-    printf("start room: ");
-    printf("%d",startRoom);
-    printf("\n");
-    printf("end room: ");
-    printf("%d", endRoom);
-    printf("\n");
-    printf("x start: ");
-    printf("%d",xStart);
-    printf("\n");
-    printf("y start: ");
-    printf("%d", yStart);
-    printf("\n");
-    printf("x end: ");
-    printf("%d",xEnd);
-    printf("\n");
-    printf("y end: ");
-    printf("%d", yEnd);
-    printf("\n");
-
     int tempXstart = xStart;
     int tempXend = xEnd;
     while(tempXstart<tempXend){
         if(mapArray[yStart][tempXstart+1] == rock){
         mapArray[yStart][tempXstart+1] = cooridor;
+        hardnessArray[yStart][tempXstart+1] = 0;
         }
         tempXstart++;
     }
@@ -100,6 +88,7 @@ void connectRooms(int startRoom ,int endRoom){
     while(tempXstart2>tempXend2){
         if(mapArray[yStart][tempXstart2-1] == rock){
         mapArray[yStart][tempXstart2-1] = cooridor;
+        hardnessArray[yStart][tempXstart2-1] = 0;
         }
         tempXstart2--;
     }
@@ -109,6 +98,7 @@ void connectRooms(int startRoom ,int endRoom){
     while(tempYstart<tempYend){
         if(mapArray[tempYstart+1][xEnd] == rock){
         mapArray[tempYstart+1][xEnd] = cooridor;
+        hardnessArray[tempYstart+1][xEnd] = 0;
         }
         tempYstart++;
     }
@@ -117,6 +107,7 @@ void connectRooms(int startRoom ,int endRoom){
     while(tempYstart2>tempYend2){
         if(mapArray[tempYstart2-1][xEnd] == rock){
         mapArray[tempYstart2-1][xEnd] = cooridor;
+        hardnessArray[tempYstart2-1][xEnd] = 0;
         }
         tempYstart2--;
     }
@@ -138,12 +129,6 @@ void generateCooridors(int roomCount){
                 closestRoom = j;
             }
         }
-
-        printf("Closest to Room ");
-        printf("%d",i);
-         printf(": ");
-        printf("%d", closestRoom);
-        printf("\n");
         connectRooms(i,closestRoom);
     }
 }
@@ -152,13 +137,16 @@ void generateMap(){
        for(int j=0; j<Y; j++){
         if(i==0 || i==X-1){
         mapArray[i][j] = horizontalWall;
+        hardnessArray[i][j] = 1;
         }
         else if(j==0 || j==Y-1){
-            mapArray[i][j] = verticalWall;
+        mapArray[i][j] = verticalWall;
+        hardnessArray[i][j] = 1;
         }
         else{
         mapArray[i][j] = rock;
-        }       
+        hardnessArray[i][j] = 1;
+        }
      }
    }
     int mostRooms = 10;
@@ -169,7 +157,6 @@ void generateMap(){
    }
    generateCooridors(numOfRooms);
 }
-
 void printMap(){
    for(int i=0; i<X; i++){
        for(int j=0; j<Y; j++){
@@ -178,7 +165,6 @@ void printMap(){
      printf("\n");
    }
 }
-
 int main()
 {
     srand(time(0));
