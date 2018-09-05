@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/ben/Desktop/327/assignment1/build",
-  "command": "/usr/bin/clang   -g   -o CMakeFiles/assignment1.dir/map.c.o   -c /Users/ben/Desktop/327/assignment1/map.c",
-  "file": "/Users/ben/Desktop/327/assignment1/map.c"
-}
-]
