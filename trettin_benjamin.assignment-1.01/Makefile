@@ -1,6 +1,6 @@
 all: map
 
-tour: map.c
+map: map.c
 	gcc -Wall -Werror -g map.c -o map
 
 clean:
