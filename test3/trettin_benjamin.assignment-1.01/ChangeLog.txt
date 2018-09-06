@@ -1,0 +1,30 @@
+commit ce8558aa1d03f63f3e381e31e9ab3843f466c0d4
+Author: Benjamin Trettin <batrettin@gmail.com>
+Date:   Wed Aug 29 15:33:56 2018 -0500
+
+    created tar file
+
+commit 623389078d032521574bda2c1c0a977767689dad
+Author: Ben Trettin <batrettin@gmail.com>
+Date:   Wed Aug 29 15:31:49 2018 -0500
+
+    changed name based on directory
+
+commit c3ad7d4623deb7e045b1de866c9651cb287cae8a
+Author: Ben Trettin <batrettin@gmail.com>
+Date:   Wed Aug 29 15:30:20 2018 -0500
+
+    changed readme
+
+commit d5e89dda315dbab8f0698a7da31545118cf70c4c
+Author: Benjamin Trettin <batrettin@gmail.com>
+Date:   Wed Aug 29 15:22:24 2018 -0500
+
+    created new zip
+
+commit 74a2c1e81cc3675fcde931cde050a6e6594a97d0
+Author: Ben Trettin <batrettin@gmail.com>
+Date:   Wed Aug 29 15:10:23 2018 -0500
+
+    changed makefile
+:

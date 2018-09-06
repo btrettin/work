@@ -1,12 +1,13 @@
-## Assignment 1.01 - Generate Dungeon Map
+## Assignment 1.01 - Dungeon Generation
 
 ## SETUP
 
-The 'makefile' is located in the build directory so you will need to go inside of it to run make.
+Run 'make' inside the trettin_benjamin.assignment-1.01 directory to build the project.
 
 ## Running Source Code
 
-The source code is located inside of the map.c file and can be run inside the build directory
-with the ./map command.
+The dungeon map can be generated using the './map' command. The source code is located inside of the map.c file.
 
 ## Notes
+
+The ChangLog file shows all of my commits for this project up to this point.
