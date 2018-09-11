@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <unistd.h>
+#include <endian.h>
+#include <machine/endian.h>
+#include <stdint.h>
+#include <sys/stat.h>
 
 #define X 21
 #define Y 80
@@ -23,6 +28,7 @@ struct room{
 struct room rooms[10];
 int pcStartX;
 int pcStartY;
+
 
 void generateRoom(int roomNumber){
     int upperX = 79;
@@ -165,9 +171,119 @@ void printMap(){
      printf("\n");
    }
 }
-int initMap()
-{
-    generateMap();
-    printMap();
+
+int saveGame(){
+    FILE *f;
+    char *home = getenv("HOME");
+    strcat(home,"/.rlg327/");
+    strcat(home,"Dungeon");
+    f = fopen(home,"w");
+    if(!f){
+      printf("could not write file\n");
+        return 1;
+    }
+    char *title = "RLG327";
+    int version = 0;
+    version = htobe32(version);
+    int sizeint;
+    sizeint = 1694;
+    sizeint = sizeint + 4 * (*m).numOfRooms;
+    sizeint = htobe32(sizeint);
+    fwrite(title,1,6,f);
+    fwrite(&version,4,1,f);
+    fwrite(&sizeint,4,1,f);
+    fwrite((*m).hardness,1,1680,f);
+
+    int a;
+
+
+    for (a=0; a<(*m).numOfRooms; a++){
+
+        int topLeftX;
+        int xWidth;
+        int topLeftY;
+        int yWidth;
+         topLeftY =  (*m).rooms[a].topLeft[1];
+         yWidth = (*m).rooms[a].bottomLeft[0]-(*m).rooms[a].topLeft[0];
+         topLeftX = (*m).rooms[a].topLeft[0];
+         xWidth = (*m).rooms[a].topright[1]-(*m).rooms[a].topLeft[1];
+        fwrite(&topLeftY, 1, 1, f);
+        fwrite(&xWidth, 1, 1, f);
+        fwrite(&topLeftX, 1, 1, f);
+        fwrite(&yWidth, 1, 1, f);
+        //Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
+
+    }
+
+    fclose(f);
     return 0;
+}
+
+
+
+int size;
+int loadGame(){
+    m = (struct Map*)malloc(sizeof(struct Map));
+    initBorder();
+    FILE *f;
+    char title[6];
+    int version;
+    char *home;
+    home = (char*) malloc(sizeof(char)*100);
+    strcpy(home,getenv("HOME"));
+    strcat(home,"/.rlg327/");
+    strcat(home,"Dungeon");
+    f= fopen(home,"r");
+    if(!f){
+        printf("cant open file");
+        return 1;
+    }
+    unsigned char hardnessModel[21][80];
+    fread(title,1,6,f);
+    fread(&version,4,1,f);
+    fread(&size,4,1,f);
+    version=be32toh(version);
+
+    fread(hardnessModel,1,1680,f);
+    int az;
+    int hg;
+    for(az=0;az<21;az++){
+        for(hg=0;hg<80;hg++){
+            (*m).hardness[az][hg]=hardnessModel[az][hg];
+        }
+    }
+    size = be32toh(size);
+    int max = (size-1694)/4;
+    int t;
+    int j;
+    for(t=0;t<21;t++){
+        for(j=0;j<80;j++){
+            if(hardnessModel[t][j]==0){
+                (*m).grid[t][j]='#';
+            }
+        }
+    }
+    int a;
+    (*m).numOfRooms=0;
+    for (a=0; a<max; a++){
+        uint8_t topLeftX;
+        uint8_t xWidth;
+        uint8_t topLeftY;
+        uint8_t yWidth;
+        fread(&topLeftX, sizeof(topLeftX), 1, f);
+        fread(&xWidth, sizeof(xWidth), 1, f);
+        fread(&topLeftY, sizeof(topLeftY), 1, f);
+        fread(&yWidth, sizeof(yWidth), 1, f);
+        Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
+        (*m).rooms[a]=r;
+        (*m).numOfRooms=(*m).numOfRooms+1;
+
+        addRoom(r);
+    }
+
+
+    fclose(f);
+
+
+return 0;
 }
