@@ -1,7 +1,7 @@
-all: map
-
-map: map.c
-	gcc -Wall -Werror -g map.c -o map -lm
+All:
+	gcc -Wall -g -O -c map.c
+	ar -cvq map.a map.o
+	gcc -Wall -g dungeonGame.c -o run map.a -lm
 
 clean:
-	rm -f map
+	rm -f dungeonGame

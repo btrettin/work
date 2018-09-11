@@ -165,9 +165,9 @@ void printMap(){
      printf("\n");
    }
 }
-int main()
+int initMap()
 {
-    srand(time(0));
     generateMap();
     printMap();
+    return 0;
 }
