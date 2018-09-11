@@ -5,8 +5,7 @@
 #include <time.h>
 #include <math.h>
 #include <unistd.h>
-#include <endian.h>
-#include <machine/endian.h>
+#include <endian.h>maake
 #include <stdint.h>
 #include <sys/stat.h>
 
@@ -170,6 +169,56 @@ void printMap(){
      }
      printf("\n");
    }
+}
+
+static Room createRoomFile(int xUperLeft,int xSize,int yUperLeft,int ySize){
+    Room r;
+    r.topLeft[0]=xUperLeft;
+    r.topLeft[1]=yUperLeft;
+    r.bottomLeft[0]=xUperLeft+xSize;
+    r.bottomLeft[1]=yUperLeft;
+    r.topright[0]=xUperLeft;
+    r.topright[1]=yUperLeft+ySize;
+    r.bottomRight[0]=xUperLeft+xSize;
+    r.bottomRight[1]=yUperLeft+ySize;
+    return r;
+}
+
+static Room* createRoom(void){
+    char done ='n';
+    Room *room;
+    room = (struct Room*)malloc(sizeof(struct Room));
+    while(done!='y'){
+        int height = rand();
+        height = height % 7;
+        if(height<5){
+            height=height+5;
+        }
+        int width = rand();
+        width = width % 7;
+        if(width<5){
+            width=width+5;
+        }
+        int locx = rand() % 19;
+        locx++;
+        int locy = rand() % 78;
+        locy++;
+        if((width+locy)<78){
+            if((height+locx)<19){
+                done='y';
+            }
+        }
+        (*room).topLeft[0]=locx;
+        (*room).topLeft[1]=locy;
+        (*room).topright[0]=locx;
+        (*room).topright[1]=locy+width;
+        (*room).bottomLeft[0]=locx+height;
+        (*room).bottomLeft[1]=locy;
+        (*room).bottomRight[0]=locx+height;
+        (*room).bottomRight[1]=locy+width;
+    }
+
+    return room;
 }
 
 int saveGame(){
