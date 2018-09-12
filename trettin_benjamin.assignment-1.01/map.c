@@ -25,6 +25,7 @@ struct room{
     int connected;
 };
 struct room rooms[100];
+int numOfRooms;
 int pcStartX;
 int pcStartY;
 
@@ -162,7 +163,7 @@ void generateMap(){
    }
     int mostRooms = 10;
     int leastRooms = 5;
-    int numOfRooms = (rand() % (mostRooms-leastRooms + 1)) + leastRooms;
+    numOfRooms = (rand() % (mostRooms-leastRooms + 1)) + leastRooms;
    for(int i=0; i<numOfRooms; i++){
        generateRoom(i);
    }
@@ -231,7 +232,7 @@ int saveGame(){
     FILE *f;
     char *home = getenv("HOME");
     strcat(home,"/.rlg327/");
-    strcat(home,"Dungeon");
+    strcat(home,"dungeon");
     f = fopen(home,"w");
     if(!f){
       printf("could not write file\n");
@@ -242,38 +243,30 @@ int saveGame(){
     version = htobe32(version);
     int sizeint;
     sizeint = 1694;
-    sizeint = sizeint + 4 * (*m).numOfRooms;
+    sizeint = sizeint + (4 * numOfRooms);
     sizeint = htobe32(sizeint);
     fwrite(title,1,6,f);
     fwrite(&version,4,1,f);
     fwrite(&sizeint,4,1,f);
-    fwrite((*m).hardness,1,1680,f);
+    fwrite(hardnessArray,1,1680,f);
 
-    int a;
-
-
-    for (a=0; a<(*m).numOfRooms; a++){
-
+    for (int a=0; a<numOfRooms; a++){
         int topLeftX;
         int xWidth;
         int topLeftY;
         int yWidth;
-         topLeftY =  (*m).rooms[a].topLeft[1];
-         yWidth = (*m).rooms[a].bottomLeft[0]-(*m).rooms[a].topLeft[0];
-         topLeftX = (*m).rooms[a].topLeft[0];
-         xWidth = (*m).rooms[a].topright[1]-(*m).rooms[a].topLeft[1];
+         topLeftY =  rooms[a].cornerArray[0][1];
+         yWidth = rooms[a].cornerArray[1][1]-rooms[a].cornerArray[0][1]+1;
+         topLeftX = rooms[a].cornerArray[0][0];
+         xWidth = rooms[a].cornerArray[1][0]-rooms[a].cornerArray[0][0]+1;
         fwrite(&topLeftY, 1, 1, f);
         fwrite(&xWidth, 1, 1, f);
         fwrite(&topLeftX, 1, 1, f);
         fwrite(&yWidth, 1, 1, f);
-        //Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
-
     }
-
     fclose(f);
     return 0;
 }
-
 
 
 int size;
