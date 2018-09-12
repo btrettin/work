@@ -243,7 +243,7 @@ int loadGame(){
     char *home;
     home = (char*) malloc(sizeof(char)*100);
     strcpy(home,getenv("HOME"));
-    strcat(home,"/.rlg327/");
+    strcat(home,"/rlg327/");
     strcat(home,"dungeon");
     f = fopen(home,"r");
     if(!f){
