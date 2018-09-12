@@ -180,18 +180,21 @@ int saveGame(){
     f = fopen(home,"w");
     if(!f){
       printf("could not write file\n");
-        return 1;
+      return 1;
     }
-    char *title = "RLG327";
+    char *title = "RLG327-F2018";
     int version = 0;
     version = htobe32(version);
     int sizeint;
-    sizeint = 1694;
-    sizeint = sizeint + (4 * numOfRooms);
+    sizeint = 1702 + (4 * numOfRooms);
     sizeint = htobe32(sizeint);
-    fwrite(title,1,6,f);
+    int startX = htobe32(pcStartX);
+    int startY = htobe32(pcStartY);
+    fwrite(title,1,12,f);
     fwrite(&version,4,1,f);
     fwrite(&sizeint,4,1,f);
+    fwrite(&startX,1,1,f);
+    fwrite(&startY,1,1,f);
     fwrite(hardnessArray,1,1680,f);
 
     for (int i=0; i<numOfRooms; i++){
@@ -203,17 +206,17 @@ int saveGame(){
          yWidth = rooms[i].cornerArray[1][1]-rooms[i].cornerArray[0][1]+1;
          topLeftX = rooms[i].cornerArray[0][0];
          xWidth = rooms[i].cornerArray[1][0]-rooms[i].cornerArray[0][0]+1;
+        fwrite(&topLeftX, 1, 1, f);
         fwrite(&topLeftY, 1, 1, f);
         fwrite(&xWidth, 1, 1, f);
-        fwrite(&topLeftX, 1, 1, f);
         fwrite(&yWidth, 1, 1, f);
     }
     fclose(f);
     return 0;
 }
 
-void createRoom(int roomNumber, int x,int width,int y,int height){
-  for(int i = y + height-1; i > y-1; i--){
+void createRoom(int roomNumber,int x,int y,int width,int height){
+  for(int i = y+height-1; i > y-1; i--){
     for(int j = x; j < x+width; j++){
          mapArray[i][j] = floor;
     }
@@ -232,7 +235,7 @@ void createRoom(int roomNumber, int x,int width,int y,int height){
 int loadGame(){
     int size;
     FILE *f;
-    char title[6];
+    char title[12];
     int version;
     char *home;
     home = (char*) malloc(sizeof(char)*100);
@@ -245,10 +248,17 @@ int loadGame(){
         return 1;
     }
     unsigned char hardnessModel[21][80];
-    fread(title,1,6,f);
+
+    fread(title,1,12,f);
     fread(&version,4,1,f);
     fread(&size,4,1,f);
+    fread(&startX,1,1,f);
+    fread(&startY,1,1,f);
+
     version=be32toh(version);
+    size = be32toh(size);
+    pcStartX = be32toh(startX);
+    pcStartY = be32toh(startY);
 
     fread(hardnessModel,1,1680,f);
     for(int i=0; i<21; i++){
@@ -256,26 +266,25 @@ int loadGame(){
             hardnessArray[i][j]=hardnessModel[i][j];
         }
     }
-    size = be32toh(size);
-    int max = (size-1694)/4;
+    int totalRooms = (size-1702)/4;
     for(int i=0; i<21; i++){
         for(int j=0; j<80; j++){
             if(hardnessModel[i][j]==0){
-                mapArray[i][j]='#';
+                mapArray[i][j]= cooridor;
             }
         }
     }
     numOfRooms=0;
-    for (int i=0; i<max; i++){
+    for (int i=0; i<totalRooms; i++){
         uint8_t topLeftX;
         uint8_t xWidth;
         uint8_t topLeftY;
         uint8_t yWidth;
         fread(&topLeftX, sizeof(topLeftX), 1, f);
-        fread(&xWidth, sizeof(xWidth), 1, f);
         fread(&topLeftY, sizeof(topLeftY), 1, f);
+        fread(&xWidth, sizeof(xWidth), 1, f);
         fread(&yWidth, sizeof(yWidth), 1, f);
-        createRoom(i, topLeftY, yWidth, topLeftX, xWidth);
+        createRoom(i, topLeftX, topLeftY, xWidth, yWidth);
         numOfRooms++;;
     }
 
