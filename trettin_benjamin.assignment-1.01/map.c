@@ -201,15 +201,15 @@ int saveGame(){
     fwrite(&sizeint,4,1,f);
     fwrite(hardnessArray,1,1680,f);
 
-    for (int a=0; a<numOfRooms; a++){
+    for (int i=0; i<numOfRooms; i++){
         int topLeftX;
         int xWidth;
         int topLeftY;
         int yWidth;
-         topLeftY =  rooms[a].cornerArray[0][1];
-         yWidth = rooms[a].cornerArray[1][1]-rooms[a].cornerArray[0][1]+1;
-         topLeftX = rooms[a].cornerArray[0][0];
-         xWidth = rooms[a].cornerArray[1][0]-rooms[a].cornerArray[0][0]+1;
+         topLeftY =  rooms[i].cornerArray[0][1];
+         yWidth = rooms[i].cornerArray[1][1]-rooms[i].cornerArray[0][1]+1;
+         topLeftX = rooms[i].cornerArray[0][0];
+         xWidth = rooms[i].cornerArray[1][0]-rooms[i].cornerArray[0][0]+1;
         fwrite(&topLeftY, 1, 1, f);
         fwrite(&xWidth, 1, 1, f);
         fwrite(&topLeftX, 1, 1, f);
@@ -219,11 +219,21 @@ int saveGame(){
     return 0;
 }
 
-static Room createRoomFile(int roomNumber, int xUpperLeft,int width,int yUpperLeft,int height){
-  rooms[roomNumber].cornerArray[0][0] = xUperLeft;
-  rooms[roomNumber].cornerArray[0][1] = yUperLeft;
-  rooms[roomNumber].cornerArray[1][0] = xUperLeft+width-1;
-  rooms[roomNumber].cornerArray[1][1] = yUpperLeft+height-1;
+static Room createRoom(int roomNumber, int x,int width,int y,int height){
+  for(int i = y + height-1; i > y-1; i--){
+    for(int j = x; j < x+width; j++){
+         mapArray[i][j] = floor;
+         hardnessArray[i][j] = 0;
+    }
+  }
+ if(roomNumber == 0){
+   pcStartX = randX;
+   pcStartY = randY;
+ }
+  rooms[roomNumber].cornerArray[0][0] = x;
+  rooms[roomNumber].cornerArray[0][1] = y;
+  rooms[roomNumber].cornerArray[1][0] = x+width-1;
+  rooms[roomNumber].cornerArray[1][1] = y+height-1;
 }
 
 
@@ -273,7 +283,7 @@ int loadGame(){
         fread(&xWidth, sizeof(xWidth), 1, f);
         fread(&topLeftY, sizeof(topLeftY), 1, f);
         fread(&yWidth, sizeof(yWidth), 1, f);
-        createRoomFile(i, topLeftY, yWidth, topLeftX, xWidth);
+        createRoom(i, topLeftY, yWidth, topLeftX, xWidth);
         numOfRooms=numOfRooms+1;
     }
 
