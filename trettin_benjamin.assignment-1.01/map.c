@@ -237,6 +237,9 @@ int loadGame(){
     FILE *f;
     char title[12];
     int version;
+
+    int startX;
+    int startY;
     char *home;
     home = (char*) malloc(sizeof(char)*100);
     strcpy(home,getenv("HOME"));
