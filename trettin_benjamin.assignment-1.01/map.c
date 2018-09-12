@@ -18,7 +18,7 @@
 #define horizontalWall '-'
 #define verticalWall '|'
 
-int hardnessArray[X][Y];
+unsigned char hardnessArray[X][Y];
 char mapArray[X][Y];
 struct room{
     int cornerArray[2][2];
@@ -77,6 +77,7 @@ void generateRoom(int roomNumber){
     rooms[roomNumber].cornerArray[1][0] = randX+randWidth-1;
     rooms[roomNumber].cornerArray[1][1] = randY+randHeight-1;
 }
+
 void connectRooms(int startRoom ,int endRoom){
     int randStart = (rand() % (2));
     int xStart = rooms[startRoom].cornerArray[randStart][0];
@@ -178,56 +179,6 @@ void printMap(){
    }
 }
 
-static Room createRoomFile(int xUperLeft,int xSize,int yUperLeft,int ySize){
-    Room r;
-    r.topLeft[0]=xUperLeft;
-    r.topLeft[1]=yUperLeft;
-    r.bottomLeft[0]=xUperLeft+xSize;
-    r.bottomLeft[1]=yUperLeft;
-    r.topright[0]=xUperLeft;
-    r.topright[1]=yUperLeft+ySize;
-    r.bottomRight[0]=xUperLeft+xSize;
-    r.bottomRight[1]=yUperLeft+ySize;
-    return r;
-}
-
-static Room* createRoom(void){
-    char done ='n';
-    Room *room;
-    room = (struct Room*)malloc(sizeof(struct Room));
-    while(done!='y'){
-        int height = rand();
-        height = height % 7;
-        if(height<5){
-            height=height+5;
-        }
-        int width = rand();
-        width = width % 7;
-        if(width<5){
-            width=width+5;
-        }
-        int locx = rand() % 19;
-        locx++;
-        int locy = rand() % 78;
-        locy++;
-        if((width+locy)<78){
-            if((height+locx)<19){
-                done='y';
-            }
-        }
-        (*room).topLeft[0]=locx;
-        (*room).topLeft[1]=locy;
-        (*room).topright[0]=locx;
-        (*room).topright[1]=locy+width;
-        (*room).bottomLeft[0]=locx+height;
-        (*room).bottomLeft[1]=locy;
-        (*room).bottomRight[0]=locx+height;
-        (*room).bottomRight[1]=locy+width;
-    }
-
-    return room;
-}
-
 int saveGame(){
     FILE *f;
     char *home = getenv("HOME");
@@ -268,11 +219,16 @@ int saveGame(){
     return 0;
 }
 
+static Room createRoomFile(int roomNumber, int xUpperLeft,int width,int yUpperLeft,int height){
+  rooms[roomNumber].cornerArray[0][0] = xUperLeft;
+  rooms[roomNumber].cornerArray[0][1] = yUperLeft;
+  rooms[roomNumber].cornerArray[1][0] = xUperLeft+width-1;
+  rooms[roomNumber].cornerArray[1][1] = yUpperLeft+height-1;
+}
+
 
 int size;
 int loadGame(){
-    m = (struct Map*)malloc(sizeof(struct Map));
-    initBorder();
     FILE *f;
     char title[6];
     int version;
@@ -280,8 +236,8 @@ int loadGame(){
     home = (char*) malloc(sizeof(char)*100);
     strcpy(home,getenv("HOME"));
     strcat(home,"/.rlg327/");
-    strcat(home,"Dungeon");
-    f= fopen(home,"r");
+    strcat(home,"dungeon");
+    f = fopen(home,"r");
     if(!f){
         printf("cant open file");
         return 1;
@@ -293,27 +249,22 @@ int loadGame(){
     version=be32toh(version);
 
     fread(hardnessModel,1,1680,f);
-    int az;
-    int hg;
-    for(az=0;az<21;az++){
-        for(hg=0;hg<80;hg++){
-            (*m).hardness[az][hg]=hardnessModel[az][hg];
+    for(int i=0; i<21; i++){
+        for(int j=0; j<80; j++){
+            hardnessArray[i][j]=hardnessModel[i][j];
         }
     }
     size = be32toh(size);
     int max = (size-1694)/4;
-    int t;
-    int j;
-    for(t=0;t<21;t++){
-        for(j=0;j<80;j++){
-            if(hardnessModel[t][j]==0){
-                (*m).grid[t][j]='#';
+    for(int i=0; i<21; i++){
+        for(int j=0; j<80; j++){
+            if(hardnessModel[i][j]==0){
+                mapArray[i][j]='#';
             }
         }
     }
-    int a;
-    (*m).numOfRooms=0;
-    for (a=0; a<max; a++){
+    numOfRooms=0;
+    for (int i=0; i<max; i++){
         uint8_t topLeftX;
         uint8_t xWidth;
         uint8_t topLeftY;
@@ -322,11 +273,8 @@ int loadGame(){
         fread(&xWidth, sizeof(xWidth), 1, f);
         fread(&topLeftY, sizeof(topLeftY), 1, f);
         fread(&yWidth, sizeof(yWidth), 1, f);
-        Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
-        (*m).rooms[a]=r;
-        (*m).numOfRooms=(*m).numOfRooms+1;
-
-        addRoom(r);
+        createRoomFile(i, topLeftY, yWidth, topLeftX, xWidth);
+        numOfRooms=numOfRooms+1;
     }
 
 
