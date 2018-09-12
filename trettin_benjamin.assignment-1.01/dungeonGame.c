@@ -2,8 +2,6 @@
 #include "map.c"
 #include <string.h>
 
-int load=0;
-int save=0;
 
 void initGame(void){
     if(load){
@@ -25,9 +23,10 @@ void closeGame(void){
 
 int main (int argc, char* argv[]){
     srand(time(0));
-    int x;
     int eval;
-    for(x=1;x<argc;x++){
+    int load=0;
+    int save=0;
+    for(int x=1; x<argc; x++){
         eval=strcmp(argv[x],"--save");
         if(eval==0){
             save=1;

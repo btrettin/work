@@ -6,7 +6,7 @@ Run 'make' inside the trettin_benjamin.assignment-1.01 directory to build the pr
 
 ## Running Source Code
 
-The dungeon map can be generated using the './map' command. The source code is located inside of the map.c file.
+The dungeon map can be generated using the './run' command. The source code is located inside of the map.c and dungeonGame.c files.   --save and --load can be used to save and load the ''dungeon' file found in the .rlg327 file.
 
 ## Notes
 
