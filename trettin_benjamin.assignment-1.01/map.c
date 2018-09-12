@@ -212,6 +212,7 @@ int saveGame(){
         fwrite(&yWidth, 1, 1, f);
     }
     fclose(f);
+    printf("Succesfully Saved!\n");
     return 0;
 }
 
@@ -289,5 +290,6 @@ int loadGame(){
         createRoom(i, topLeftX, topLeftY, xWidth, yWidth);
     }
     fclose(f);
+    printf("Succesfully Loaded!\n");
     return 0;
   }
