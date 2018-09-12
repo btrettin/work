@@ -234,6 +234,19 @@ void createRoom(int roomNumber,int x,int y,int width,int height){
 
 
 int loadGame(){
+  for(int i=0; i<X; i++){
+      for(int j=0; j<Y; j++){
+       if(i==0 || i==X-1){
+       mapArray[i][j] = horizontalWall;
+       }
+       else if(j==0 || j==Y-1){
+       mapArray[i][j] = verticalWall;
+       }
+       else{
+       mapArray[i][j] = rock;
+       }
+    }
+  }
     int size;
     FILE *f;
     char title[12];
