@@ -174,7 +174,7 @@ void printMap(){
 
 int saveGame(){
     FILE *f;
-    char *home = getenv("HOME");
+    char *home = getenv("327");
     strcat(home,"/.rlg327/");
     strcat(home,"dungeon");
     f = fopen(home,"w");
