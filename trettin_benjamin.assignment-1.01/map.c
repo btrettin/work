@@ -180,7 +180,7 @@ int saveGame(){
     f = fopen(home,"w");
     if(!f){
       printf("could not write file\n");
-      return 1;
+      return 0;
     }
     char *title = "RLG327-F2018";
     int version = 0;
@@ -245,7 +245,7 @@ int loadGame(){
     f = fopen(home,"r");
     if(!f){
         printf("cant open file");
-        return 1;
+        return 0;
     }
     unsigned char hardnessModel[21][80];
 
@@ -266,7 +266,7 @@ int loadGame(){
             hardnessArray[i][j]=hardnessModel[i][j];
         }
     }
-    int totalRooms = (size-1702)/4;
+    numOfRooms = (size-1702)/4;
     for(int i=0; i<21; i++){
         for(int j=0; j<80; j++){
             if(hardnessModel[i][j]==0){
@@ -274,8 +274,7 @@ int loadGame(){
             }
         }
     }
-    numOfRooms=0;
-    for (int i=0; i<totalRooms; i++){
+    for (int i=0; i<numOfRooms; i++){
         uint8_t topLeftX;
         uint8_t xWidth;
         uint8_t topLeftY;
@@ -285,12 +284,7 @@ int loadGame(){
         fread(&xWidth, sizeof(xWidth), 1, f);
         fread(&yWidth, sizeof(yWidth), 1, f);
         createRoom(i, topLeftX, topLeftY, xWidth, yWidth);
-        numOfRooms++;;
     }
-
-
     fclose(f);
-
-
-return 0;
-}
+    return 0;
+  }
