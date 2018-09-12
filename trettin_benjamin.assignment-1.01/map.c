@@ -5,7 +5,7 @@
 #include <time.h>
 #include <math.h>
 #include <unistd.h>
-#include <endian.h>maake
+#include <endian.h>
 #include <stdint.h>
 #include <sys/stat.h>
 
@@ -28,13 +28,6 @@ struct room rooms[100];
 int numOfRooms;
 int pcStartX;
 int pcStartY;
-
-struct Room {
-    int topLeft[2];
-    int topright[2];
-    int bottomLeft[2];
-    int bottomRight[2];
-};
 
 void generateRoom(int roomNumber){
     int upperX = 79;
@@ -219,7 +212,7 @@ int saveGame(){
     return 0;
 }
 
-static Room createRoom(int roomNumber, int x,int width,int y,int height){
+void createRoom(int roomNumber, int x,int width,int y,int height){
   for(int i = y + height-1; i > y-1; i--){
     for(int j = x; j < x+width; j++){
          mapArray[i][j] = floor;
@@ -227,8 +220,8 @@ static Room createRoom(int roomNumber, int x,int width,int y,int height){
     }
   }
  if(roomNumber == 0){
-   pcStartX = randX;
-   pcStartY = randY;
+   pcStartX = x;
+   pcStartY = y;
  }
   rooms[roomNumber].cornerArray[0][0] = x;
   rooms[roomNumber].cornerArray[0][1] = y;
@@ -284,7 +277,7 @@ int loadGame(){
         fread(&topLeftY, sizeof(topLeftY), 1, f);
         fread(&yWidth, sizeof(yWidth), 1, f);
         createRoom(i, topLeftY, yWidth, topLeftX, xWidth);
-        numOfRooms=numOfRooms+1;
+        numOfRooms++;;
     }
 
 
