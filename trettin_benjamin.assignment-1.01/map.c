@@ -161,6 +161,7 @@ void generateMap(){
    for(int i=0; i<numOfRooms; i++){
        generateRoom(i);
    }
+   mapArray[pcStartX][pcStartY] = pc;
    generateCooridors(numOfRooms);
 }
 void printMap(){
