@@ -161,7 +161,7 @@ void generateMap(){
    for(int i=0; i<numOfRooms; i++){
        generateRoom(i);
    }
-   mapArray[pcStartX][pcStartY] = pc;
+   mapArray[pcStartY][pcStartX] = pc;
    generateCooridors(numOfRooms);
 }
 void printMap(){
@@ -303,7 +303,7 @@ int loadGame(){
         fread(&yWidth, sizeof(yWidth), 1, f);
         createRoom(i, topLeftX, topLeftY, xWidth, yWidth);
     }
-    mapArray[pcStartX][pcStartY] = pc;
+    mapArray[pcStartY][pcStartX] = pc;
     fclose(f);
     printf("Succesfully Loaded!\n");
     return 0;
