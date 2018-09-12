@@ -302,6 +302,7 @@ int loadGame(){
         fread(&yWidth, sizeof(yWidth), 1, f);
         createRoom(i, topLeftX, topLeftY, xWidth, yWidth);
     }
+    mapArray[pcStartX][pcStartY] = pc;
     fclose(f);
     printf("Succesfully Loaded!\n");
     return 0;
