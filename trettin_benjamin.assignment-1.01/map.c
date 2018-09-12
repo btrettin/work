@@ -143,15 +143,15 @@ void generateMap(){
        for(int j=0; j<Y; j++){
         if(i==0 || i==X-1){
         mapArray[i][j] = horizontalWall;
-        hardnessArray[i][j] = 1;
+        hardnessArray[i][j] = (rand() % (254)) + 1;
         }
         else if(j==0 || j==Y-1){
         mapArray[i][j] = verticalWall;
-        hardnessArray[i][j] = 1;
+        hardnessArray[i][j] = (rand() % (254)) + 1;
         }
         else{
         mapArray[i][j] = rock;
-        hardnessArray[i][j] = 1;
+        hardnessArray[i][j] = (rand() % (254)) + 1;
         }
      }
    }
@@ -216,7 +216,6 @@ void createRoom(int roomNumber, int x,int width,int y,int height){
   for(int i = y + height-1; i > y-1; i--){
     for(int j = x; j < x+width; j++){
          mapArray[i][j] = floor;
-         hardnessArray[i][j] = 0;
     }
   }
  if(roomNumber == 0){
@@ -230,8 +229,8 @@ void createRoom(int roomNumber, int x,int width,int y,int height){
 }
 
 
-int size;
 int loadGame(){
+    int size;
     FILE *f;
     char title[6];
     int version;
