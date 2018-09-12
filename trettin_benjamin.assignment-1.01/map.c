@@ -24,10 +24,16 @@ struct room{
     int cornerArray[2][2];
     int connected;
 };
-struct room rooms[10];
+struct room rooms[100];
 int pcStartX;
 int pcStartY;
 
+struct Room {
+    int topLeft[2];
+    int topright[2];
+    int bottomLeft[2];
+    int bottomRight[2];
+};
 
 void generateRoom(int roomNumber){
     int upperX = 79;
