@@ -258,8 +258,8 @@ int loadGame(){
     char *home;
     home = (char*) malloc(sizeof(char)*100);
     strcpy(home,getenv("HOME"));
-    strcat(home,"/rlg327/");
-    strcat(home,"dungeon");
+    strcat(home,"/work/");
+    strcat(home,"test_dungeon_files/101.rlg327");
     f = fopen(home,"r");
     if(!f){
         printf("cant open file");
