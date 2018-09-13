@@ -1,3 +1,69 @@
+commit 19
+Author: Benjamin Trettin
+Date:   wed sep 12 5:12:51 2018 -0500
+
+    finished changing readme and changelog
+
+  trettin_benjamin.assignment-1.01/README.md      |  12 ++++++++++++
+  trettin_benjamin.assignment-1.01/CHANGELOG.txt     |  85 +++++++++++++++++++++
+  2 files changed, 12 insertions(+)
+
+commit 18
+Author: Benjamin Trettin
+Date:   tues sep 11 10:54:21 2018 -0500
+
+    Fixed bugs in load method and added proper formatting of mapArray
+
+  trettin_benjamin.assignment-1.01/map.c      |  12 ++++++++++--
+  1 file changed, 10 insertions(+), 2 deletions(-)
+
+commit 17
+Author: Benjamin Trettin
+Date:   mon sep 10 21:23:01 2018 -0500
+
+    added functions in dungeonGame to return load or save depending on user input
+
+  trettin_benjamin.assignment-1.01/dungeonGame.c     |  15 ++++++++++++++++++++--
+  1 file changed, 15 insertions(+), 2 deletions(-)
+
+commit 16
+Author: Benjamin Trettin
+Date:   mon sep 10 14:43:27 2018 -0500
+
+    Added functions for fread and fwrite for load/save and create a createRoom function to implement load
+
+  trettin_benjamin.assignment-1.01/map.c      |  13 ++++++++++++++
+  1 file changed, 13 insertions(+)
+
+commit 15
+Author: Benjamin Trettin
+Date:   sat sep 7 13:11:41 2018 -0500
+
+    Added load and save functions. Very simple functionality.
+
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.01/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
+
+commit 14
+Author: Benjamin Trettin
+Date:   sat sep 8 12:22:58 2018 -0500
+
+    Added hardness randomness and pc starting
+
+  trettin_benjamin.assignment-1.01/map.c      |  8 ++++++++
+  1 file changed, 8 insertions(+)
+
+commit 13
+Author: Benjamin Trettin
+Date:   fri Sep 7 18:33:02 2018 -0500
+
+    created main file called dungeonGame and moved some abstract functionality to it
+
+  trettin_benjamin.assignment-1.01/dungeonGame.c      |  7 +++++++
+  trettin_benjamin.assignment-1.01/maap.c      |  12 +++---------
+  1 file added, 1 file changed 10 insertions(+), 9 deletions(-)
+
 commit 12
 Author: Benjamin Trettin
 Date:   Wed Sep 5 19:37:17 2018 -0500
