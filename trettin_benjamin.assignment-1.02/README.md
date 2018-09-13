@@ -2,7 +2,7 @@
 
 ## SETUP
 
-Run 'make' inside the trettin_benjamin.assignment-1.01 directory to build the project.
+Run 'make' inside the trettin_benjamin.assignment-1.02 directory to build the project.
 
 ## Running Source Code
 
