@@ -2,17 +2,16 @@
 
 ## SETUP
 
-Run 'make' inside the trettin_benjamin.assignment-1.02 directory to build the project.
+Run 'make' inside the trettin_benjamin.assignment-1.03 directory to build the project.
 
 ## Running Source Code
 
-The dungeon map can be generated using the ./run command. The source code is located inside of the map.c and dungeonGame.c files.  
+The three dungeon maps can be generated using the ./run command. The source code is located inside of the map.c, heap.c and dungeonGame.c files.
 
-./run --save   
-
-./run --load  
-
-These commands above can be used to save and load the dungeon file found in the .rlg327 directory.
+This should produce three dungeons maps.
+1. Original Dungeon map
+2. Distance to PC via Rooms and Cooridors.
+3. Distance to PC through all tiles.  
 
 ## Notes
 
