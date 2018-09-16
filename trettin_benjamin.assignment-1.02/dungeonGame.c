@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "map.c"
 #include <string.h>
+#include "heap.h"
 
 int load=0;
 int save=0;
@@ -15,6 +16,8 @@ void initGame(void){
 
 void playGame(void){
     printMap();
+    printDistanceGrid();
+    printDistanceGridPlus();
 }
 
 void closeGame(void){
