@@ -178,7 +178,7 @@ void init(){
    }
    mapArray[pcStartY][pcStartX] = pc;
    generateCooridors(numOfRooms);
-   djikstra();
+   djikstra_wall();
 }
 
 int saveGame(){
@@ -314,13 +314,8 @@ int loadGame(){
     mapArray[pcStartY][pcStartX] = pc;
     fclose(f);
     printf("Succesfully Loaded!\n");
-    djikstra();
-    return 0;
-  }
-
-  static void djikstra(){
-    djikstra_wall();
     djikstra_cooridor();
+    return 0;
   }
 
   int32_t compare_cell(const void *key,const void *with){
