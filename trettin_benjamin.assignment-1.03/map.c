@@ -585,6 +585,7 @@ static char getAsci(int num){
     int j;
     for(i=0;i<21;i++){
         for(j=0;j<80;j++){
+            char temp = mapArray[i][j];
             if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
                 temp=' ';
             }
