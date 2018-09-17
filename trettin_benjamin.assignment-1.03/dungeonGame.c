@@ -17,7 +17,6 @@ void initGame(void){
 void playGame(void){
     printMap();
     printDistanceGrid();
-    printDistanceGridPlus();
 }
 
 void closeGame(void){
