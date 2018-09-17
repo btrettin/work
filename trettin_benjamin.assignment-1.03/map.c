@@ -413,9 +413,9 @@ void init(){
 
 int saveGame(){
     FILE *f;
-    char *home = getenv("HOME");
-    strcat(home,"/rlg327/");
-    strcat(home,"dungeon");
+    char *home = getenv("work");
+    strcat(home,"/test_dungeon_files/");
+    strcat(home,"105.rlg327");
     f = fopen(home,"w");
     if(!f){
       printf("could not write file\n");
@@ -497,7 +497,7 @@ int loadGame(){
     home = (char*) malloc(sizeof(char)*100);
     strcpy(home,getenv("work"));
     strcat(home,"/test_dungeon_files/");
-    strcat(home,"110.rlg327");
+    strcat(home,"105.rlg327");
     f = fopen(home,"r");
     if(!f){
         printf("cant open file");
