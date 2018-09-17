@@ -559,41 +559,12 @@ int loadGame(){
 
   void printDistanceGrid(){
     for(int i=0; i<21; i++){
-      for (int j=0; j<81; j++){
+      for (int j=0; j<80; j++){
         printf("%d", roomDistanceGrid[i][j].distance);
       }
       printf("\n");
     }
 }
 void printDistanceGridPlus(){
-    for(int i=1;i<20;i++){
-        for(int j=1;j<79;j++){
-            if(pcStartX==j && pcStartY==i){
-                printf("0");
-            }else{
-                int num = roomDistanceGrid[i][j].distance;
-                if(num==10000){
-                    printf("%c",mapArray[i][j]);
-                }else{
-                    if(num<10){
-                        printf("%i",num);
-                    }else{
-                        if(num<62 && num>9){
-                        printf("%c",getAsci(num));
-                            }else{
-                            char sample = mapArray[i][j];
-                            if(sample!='.' && sample!='#'){
-                                sample=' ';
-                            }
-                        printf("%c",sample);
-                        }
-                    }
-
-                }
-
-            }
-
-        }
-        printf("%c\n",' ');
-    }
+  
 }
