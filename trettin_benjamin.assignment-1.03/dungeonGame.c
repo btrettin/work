@@ -10,7 +10,7 @@ void initGame(void){
     if(load){
         loadGame();
     }else{
-      generateMap();
+      init();
     }
 }
 

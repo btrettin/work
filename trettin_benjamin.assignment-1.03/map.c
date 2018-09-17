@@ -1,3 +1,4 @@
+#include "heap.h"
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
@@ -9,7 +10,7 @@
 #include <stdint.h>
 #include <sys/stat.h>
 #include <limits.h>
-#include "heap.h"
+
 
 #define X 21
 #define Y 80
