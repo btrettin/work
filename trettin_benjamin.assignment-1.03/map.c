@@ -21,7 +21,6 @@
 #define horizontalWall '-'
 #define verticalWall '|'
 
-typedef struct corridor_path corridor_path_t;
 
 
 typedef struct{
