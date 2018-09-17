@@ -560,11 +560,16 @@ int loadGame(){
   void printDistanceGrid(){
     for(int i=0; i<21; i++){
       for (int j=0; j<80; j++){
-        printf("%d", roomDistanceGrid[i][j].distance);
+        char temp = mapArray[i][j];
+        if(temp = '.' | temp = '#' | temp = '@'){
+          int value = roomDistanceGrid[i][j].distance;
+          value = value % 10;
+          printf("%d", value);
+        }
       }
       printf("\n");
     }
 }
 void printDistanceGridPlus(){
-  
+
 }
