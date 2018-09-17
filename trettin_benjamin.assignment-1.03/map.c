@@ -22,14 +22,16 @@
 
 typedef struct corridor_path corridor_path_t;
 
-typedef struct{
-  distanceCell roomDistanceGrid[30][100];
-}
+
 typedef struct{
     int distance;
     int xloc;
     int yloc;
 }distanceCell;
+
+typedef struct{
+  distanceCell roomDistanceGrid[30][100];
+}
 
 unsigned char hardnessArray[X][Y];
 char mapArray[X][Y];
