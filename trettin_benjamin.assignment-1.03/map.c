@@ -567,7 +567,7 @@ int loadGame(){
           printf("%d", value);
         }
         else{
-          printf(' ');
+          printf("%c",' ');
         }
       }
       printf("\n");
