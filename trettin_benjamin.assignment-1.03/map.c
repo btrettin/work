@@ -198,7 +198,6 @@ static void djikstra_cooridor(){
         temp =(distanceCell*) binheap_remove_min(&heap);
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
-        int nextVal = roomDistanceGrid[tempy][tempx].distance+1;
 
         if(mapArray[(*temp).yloc-1][(*temp).xloc]=='.' || mapArray[(*temp).yloc-1][(*temp).xloc]=='#'){/* top */
                 if(roomDistanceGrid[tempy-1][tempx].distance==1000){
@@ -586,7 +585,6 @@ static char getAsci(int num){
     int j;
     for(i=0;i<21;i++){
         for(j=0;j<80;j++){
-            char temp = mapArray[i][j];
             if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
                 temp=' ';
             }
@@ -615,7 +613,6 @@ void printDistanceGridPlus(){
     int j;
     for(i=1;i<20;i++){
         for(j=1;j<79;j++){
-            char temp = mapArray[i][j];
             if(pcStartX==j && pcStartY==i){
                 printf("0");
             }else{
