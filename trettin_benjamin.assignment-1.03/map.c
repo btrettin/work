@@ -29,9 +29,8 @@ typedef struct{
     int yloc;
 }distanceCell;
 
-typedef struct{
-  distanceCell roomDistanceGrid[30][100];
-};
+
+struct distanceCell roomDistanceGrid[30][100];
 
 unsigned char hardnessArray[X][Y];
 char mapArray[X][Y];
