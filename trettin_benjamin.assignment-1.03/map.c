@@ -154,6 +154,10 @@ void generateCooridors(int roomCount){
     }
 }
 
+int32_t compare_cell(const void *key,const void *with){
+return (*(const distanceCell *) key).distance - (*(const distanceCell *) with).distance;
+}
+
 static int getWeight(int num){
   if(num<85){
       return 1;
@@ -544,10 +548,6 @@ int loadGame(){
     djikstra_cooridor();
     return 0;
   }
-
-  int32_t compare_cell(const void *key,const void *with){
-  return (*(const distanceCell *) key).distance - (*(const distanceCell *) with).distance;
-}
 
 static char getAsci(int num){
   char asci;
