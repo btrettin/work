@@ -413,8 +413,8 @@ void init(){
 
 int saveGame(){
     FILE *f;
-    char *home = getenv("work");
-    strcat(home,"/test_dungeon_files/");
+    char *home = getenv("HOME");
+    strcat(home,"/work/test_dungeon_files/");
     strcat(home,"105.rlg327");
     f = fopen(home,"w");
     if(!f){
@@ -495,8 +495,8 @@ int loadGame(){
     int startY;
     char *home;
     home = (char*) malloc(sizeof(char)*100);
-    strcpy(home,getenv("work"));
-    strcat(home,"/test_dungeon_files/");
+    strcpy(home,getenv("HOME"));
+    strcat(home,"/work/test_dungeon_files/");
     strcat(home,"105.rlg327");
     f = fopen(home,"r");
     if(!f){
