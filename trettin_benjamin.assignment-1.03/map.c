@@ -589,3 +589,13 @@ void printDistanceGridPlus(){
     printf("\n");
   }
 }
+
+void printHardness(){
+  for(int i=0; i<21; i++){
+    for (int j=0; j<80; j++){
+        printf("%d",hardnessArray[i][j]);
+        printf("%c",' ');
+    }
+    printf("\n");
+  }
+}
