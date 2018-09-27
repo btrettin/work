@@ -1,3 +1,80 @@
+commit 27
+Author: Benjamin Trettin
+Date:   wed sep 26 18:54:21 2018 -0500
+
+    updated readme and changelog
+
+  trettin_benjamin.assignment-1.01/README.md      | 4 ++--
+  trettin_benjamin.assignment-1.01/CHANGELOG.txt     |  77 +++++++++++++++++++++
+  2 files changed, 79 insertions(+), 2 deletions(-)
+
+commit 26
+Author: Benjamin Trettin
+Date:   mon sep 24 21:23:01 2018 -0500
+
+    finished fixing bugs
+
+  trettin_benjamin.assignment-1.01/map.c     |  15 ++++++++++++++++++++--
+  1 file changed, 15 insertions(+), 2 deletions(-)
+
+commit 25
+Author: Benjamin Trettin
+Date:   wed sep 19 16:43:17 2018 -0500
+
+    Fixed bugs with djikstra for both and added weight method
+
+  trettin_benjamin.assignment-1.01/map.c      |  13 ++++++++++++++---
+  1 file changed, 13 insertions(+), 3 deletions(-)
+
+commit 24
+Author: Benjamin Trettin
+Date:   tues sep 18 13:11:41 2018 -0500
+
+    Added load and save functions. Very simple functionality.
+
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.03/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
+
+commit 23
+Author: Benjamin Trettin
+Date:   tues sep 18 10:22:52 2018 -0500
+
+    Implemented some of djikstra for all map and created printing methods for map
+
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.03/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
+
+commit 22
+Author: Benjamin Trettin
+Date:   mon Sep 17 15:23:02 2018 -0500
+
+    used heap to implemnet djikstra for cooridors
+
+  trettin_benjamin.assignment-1.03/map.c      | 18 +++++++++++--------
+  1 file changed 10 insertions(+), 8 deletions(-)
+
+commit 21
+Author: Benjamin Trettin
+Date:   Sun Sep 16 12:32:12 2018 -0500
+
+    Added heap from library and heap.h to use
+
+ trettin_benjamin.assignment-1.03/heap.c      | Bin 0 -> 45 bytes
+ trettin_benjamin.assignment-1.03/heap.h      | Bin 0 -> 6 bytes
+ 2 files Added
+
+commit 20
+Author: Benjamin Trettin
+Date:   Sat Sep 15 13:25:07 2018 -0500
+
+    created templates and based code for both algorithms
+
+ trettin_benjamin.assignment-1.03/map.c               |   18 ++++++++++++++++++++
+ trettin_benjamin.assignment-1.03/dungeonGame.c       |   4  ++++
+ 2 files changed, 16 insertions(+)
+
 commit 19
 Author: Benjamin Trettin
 Date:   wed sep 12 5:12:51 2018 -0500

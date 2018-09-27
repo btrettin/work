@@ -18,8 +18,6 @@ void playGame(void){
     printMap();
     printDistanceGrid();
     printDistanceGridPlus();
-    printHardness();
-  //  printHardness();
 }
 
 void closeGame(void){

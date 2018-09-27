@@ -520,9 +520,11 @@ int loadGame(){
 
     int startX;
     int startY;
-    char *home = getenv("HOME");
-    strcat(home,"/work/test_dungeon_files/");
-    strcat(home,"104.rlg327");
+    char *home;
+    home = (char*) malloc(sizeof(char)*100);
+    strcpy(home,getenv("HOME"));
+    strcat(home,"/rlg327/");
+    strcat(home,"dungeon");
     f = fopen(home,"r");
     if(!f){
         printf("cant open file");
@@ -617,13 +619,5 @@ void printDistanceGridPlus(){
         }
     }
     printf("\n");
-  }
-}
-
-void printHardness(){
-  for(int i=0; i<80; i++){
-        printf("%d",hardnessArray[9][i]);
-        printf("%c",' ');
-        printf("\n");
   }
 }
