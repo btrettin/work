@@ -520,7 +520,6 @@ int loadGame(){
 
     int startX;
     int startY;
-    char *home;
     char *home = getenv("HOME");
     strcat(home,"/work/test_dungeon_files/");
     strcat(home,"104.rlg327");
