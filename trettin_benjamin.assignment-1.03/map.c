@@ -440,10 +440,10 @@ void init(){
 
 int saveGame(){
     FILE *f;
-    char *home;
-    home = getenv("HOME");
-    strcat(home,"/rlg327/");
+    char *home = getenv("HOME");
+    strcat(home,"/.rlg327/");
     strcat(home,"dungeon");
+    f = fopen(home,"w");
     if(!f){
       printf("could not write file\n");
       return 0;
@@ -521,10 +521,11 @@ int loadGame(){
     int startX;
     int startY;
     char *home;
-    home = getenv("HOME");
-    strcat(home,"/rlg327/");
+    home = (char*) malloc(sizeof(char)*100);
+    strcpy(home,getenv("HOME"));
+    strcat(home,"/.rlg327/");
     strcat(home,"dungeon");
-    f = fopen(home,"r");
+    f= fopen(home,"r");
     if(!f){
         printf("cant open file");
         return 0;
