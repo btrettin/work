@@ -30,12 +30,13 @@ typedef struct{
 }distanceCell;
 
 
-distanceCell roomDistanceGrid[30][100];
-distanceCell wallDistanceGrid[30][100];
+distanceCell roomDistanceGrid[21][80];
+distanceCell wallDistanceGrid[21][80];
 
 unsigned char hardnessArray[X][Y];
 char mapArray[X][Y];
 char mapArray[X][Y];
+char weightArray[X][Y];
 struct room{
     int cornerArray[2][2];
     int connected;
@@ -155,21 +156,21 @@ void generateCooridors(int roomCount){
     }
 }
 
-int32_t compare_cell(const void *key,const void *with){
-return (*(const distanceCell *) key).distance - (*(const distanceCell *) with).distance;
+static int getWeight(int num){
+    if(num<85){
+        return 1;
+    }
+    if(num<171){
+        return 2;
+    }
+    if(num<255){
+        return 3;
+    }
+    return 10000;
 }
 
-static int getWeight(int num){
-  if(num<85){
-      return 1;
-  }
-  if(num<171){
-      return 2;
-  }
-  if(num<255){
-      return 3;
-  }
-  return 10000;
+int32_t compare_cell(const void *key,const void *with){
+  return (*(const distanceCell *) key).distance - (*(const distanceCell *) with).distance;
 }
 
 static void djikstra_cooridor(){
@@ -280,124 +281,148 @@ static void djikstra_cooridor(){
           }
     }
 }
-static void djikstra_wall(){
-  for( int xPre=1;xPre<79;xPre++){
-      for(int yPre=1;yPre<20;yPre++){
-          distanceCell pass;
-          pass.distance=10000;
-          pass.yloc=yPre;/* 1000 will represent infinity */
-          pass.xloc=xPre;
-          wallDistanceGrid[yPre][xPre]=pass;
-      }
-  }
-  wallDistanceGrid[pcStartY][pcStartX].distance=0;
-  binheap_t heap;
-  binheap_init(&heap,compare_cell,free);
-  int pcXl;
-  int pcYl;
-  pcXl=pcStartX;
-  pcYl=pcStartY;
-  distanceCell root = wallDistanceGrid[pcYl][pcXl];
-  root.distance=0;
-  binheap_insert(&heap,&root);
-  int tempx;
-  int tempy;
-  while(!binheap_is_empty(&heap)){
-      distanceCell *temp;
-      temp =(distanceCell*) binheap_remove_min(&heap);
-      tempx = (*temp).xloc;
-      tempy = (*temp).yloc;
-      int alt;
+static void djikstra_wall(void){
+    int xPre=0;
+    int yPre=0;
 
-      if(mapArray[(*temp).yloc-1][(*temp).xloc]!='-' || mapArray[(*temp).yloc-1][(*temp).xloc]!='|'){/* top */
-              alt = getWeight(hardnessArray[tempy-1][tempx]);
-              alt = alt + wallDistanceGrid[tempy][tempx].distance;
-              if(wallDistanceGrid[tempy-1][tempx].distance>alt){
-                  wallDistanceGrid[tempy-1][tempx].distance=alt;
-                  distanceCell *temp0;
-                  temp0 = &wallDistanceGrid[tempy-1][tempx];
-                  binheap_insert(&heap, temp0);
-          }
-      }
-       if(mapArray[(*temp).yloc+1][(*temp).xloc]!='-' || mapArray[(*temp).yloc+1][(*temp).xloc]!='|'){/* bottom */
-              alt = getWeight(hardnessArray[tempy+1][tempx])+wallDistanceGrid[tempy][tempx].distance;
-              if(wallDistanceGrid[tempy+1][tempx].distance>alt){
-                  wallDistanceGrid[tempy+1][tempx].distance=(*temp).distance+1;
-                  distanceCell *temp1;
-                  temp1 = &wallDistanceGrid[tempy+1][tempx];
-                  binheap_insert(&heap,temp1);
-              }
-      }
-       if(mapArray[(*temp).yloc][(*temp).xloc+1]!='-' || mapArray[(*temp).yloc][(*temp).xloc+1]!='|'){/* right */
-              alt = getWeight(hardnessArray[tempy][tempx+1])+wallDistanceGrid[tempy][tempx].distance;
-              if(wallDistanceGrid[tempy][tempx+1].distance>alt){
-                  wallDistanceGrid[tempy][tempx+1].distance=(*temp).distance+1;
-                  distanceCell *temp2;
-                  temp2 = &wallDistanceGrid[tempy][tempx+1];
-                  binheap_insert(&heap,temp2);
-              }
-      }
-       if(mapArray[(*temp).yloc][(*temp).xloc-1]!='-' || mapArray[(*temp).yloc][(*temp).xloc-1]!='|'){/* left */
+    for(xPre=1;xPre<79;xPre++){
+        for(yPre=1;yPre<20;yPre++){
+            distanceCell pass;
+            pass.distance=10000;
+            pass.yloc=yPre;/* 1000 will represent infinity */
+            pass.xloc=xPre;
+            wallDistanceGrid[yPre][xPre]=pass;
+        }
+    }
+    wallDistanceGrid[pcStartY][pcStartX].distance=0;
+    binheap_t heapcell;
+    binheap_init(&heapcell,compare_cell,free);
+
+    distanceCell root = wallDistanceGrid[pcStartY][pcStartX];
+    root.distance=0;
+    binheap_insert(&heapcell,&root);
+    int tempx;
+    int tempy;
+    while(!binheap_is_empty(&heapcell)){
+        distanceCell *temp;
+        temp =(distanceCell*) binheap_remove_min(&heapcell);
+        tempx = (*temp).xloc;
+        tempy = (*temp).yloc;
+        int alt;
+
+        if(mapArray[(*temp).yloc-1][(*temp).xloc]!='-' || mapArray[(*temp).yloc-1][(*temp).xloc]!='|'){/* top */
+
                alt = getWeight(hardnessArray[tempy][tempx])+wallDistanceGrid[tempy][tempx].distance;
-              if(wallDistanceGrid[tempy][tempx-1].distance>alt){
-                  wallDistanceGrid[tempy][tempx-1].distance=alt;
-                  distanceCell *temp3;
-                  temp3 = &wallDistanceGrid[tempy][tempx-1];
-                  binheap_insert(&heap,temp3);
-              }
-      }
-      if(mapArray[(*temp).yloc-1][(*temp).xloc+1]!='-' || mapArray[(*temp).yloc-1][(*temp).xloc+1]!='|'){/* top right */
-              alt = getWeight(hardnessArray[tempy-1][tempx+1])+wallDistanceGrid[tempy][tempx].distance;
-              if(wallDistanceGrid[tempy-1][tempx+1].distance>alt){
-                  wallDistanceGrid[tempy-1][tempx+1].distance=alt;
-                  distanceCell *temp4;
-                  temp4 = &wallDistanceGrid[tempy-1][tempx+1];
-                  binheap_insert(&heap,temp4);
-              }
-      }
-      if(mapArray[(*temp).yloc-1][(*temp).xloc-1]!='-' || mapArray[(*temp).yloc-1][(*temp).xloc-1]=='|'){/* top left */
-               alt = getWeight(hardnessArray[tempy-1][tempx-1])+wallDistanceGrid[tempy][tempx].distance;
-              if(wallDistanceGrid[tempy-1][tempx-1].distance>alt){
-                  wallDistanceGrid[tempy-1][tempx-1].distance=alt;
-                  distanceCell *temp5;
-                  temp5 = &wallDistanceGrid[tempy-1][tempx-1];
-                 binheap_insert(&heap,temp5);
-              }
-      }
-      if(mapArray[(*temp).yloc+1][(*temp).xloc-1]!='-' || mapArray[(*temp).yloc+1][(*temp).xloc-1]!='|'){/* bottomLeft left */
-               alt = getWeight(hardnessArray[tempy+1][tempx-1])+wallDistanceGrid[tempy][tempx].distance;
-              if(wallDistanceGrid[tempy+1][tempx-1].distance>alt){
-                  wallDistanceGrid[tempy+1][tempx-1].distance=alt;
-                  distanceCell *temp6;
-                  temp6 = &wallDistanceGrid[tempy+1][tempx-1];
-                  binheap_insert(&heap,temp6);
-              }
-      }
-      if(mapArray[(*temp).yloc+1][(*temp).xloc+1]!='-' || mapArray[(*temp).yloc+1][(*temp).xloc+1]!='|'){/* bottom right */
-               alt = getWeight(hardnessArray[tempy+1][tempx+1])+wallDistanceGrid[tempy][tempx].distance;
-              if(wallDistanceGrid[tempy+1][tempx+1].distance>alt){
-                  wallDistanceGrid[tempy+1][tempx+1].distance=alt;
-                  distanceCell *temp7;
-                  temp7 = &wallDistanceGrid[tempy+1][tempx+1];
-                  binheap_insert(&heap,temp7);
+                if(wallDistanceGrid[tempy-1][tempx].distance>alt){
+                    wallDistanceGrid[tempy-1][tempx].distance=alt;
+                    distanceCell *temp0;
+                    temp0 = &wallDistanceGrid[tempy-1][tempx];
+                    binheap_insert(&heapcell, temp0);
+
+            }
+        }
+         if(mapArray[(*temp).yloc+1][(*temp).xloc]!='-' || mapArray[(*temp).yloc+1][(*temp).xloc]!='|'){/* bottom */
+
+                alt = getWeight(hardnessArray[tempy][tempx])+wallDistanceGrid[tempy][tempx].distance;
+                if(wallDistanceGrid[tempy+1][tempx].distance>alt){
+                    wallDistanceGrid[tempy+1][tempx].distance=alt;
+                    distanceCell *temp1;
+                    temp1 = &wallDistanceGrid[tempy+1][tempx];
+                    binheap_insert(&heapcell,temp1);
                 }
-           }
-     }
+        }
+         if(mapArray[(*temp).yloc][(*temp).xloc+1]!='-' || mapArray[(*temp).yloc][(*temp).xloc+1]!='|'){/* right */
+
+                alt = getWeight(hardnessArray[tempy][tempx])+wallDistanceGrid[tempy][tempx].distance;
+                if(wallDistanceGrid[tempy][tempx+1].distance>alt){
+                    wallDistanceGrid[tempy][tempx+1].distance=alt;
+                    distanceCell *temp2;
+                    temp2 = &wallDistanceGrid[tempy][tempx+1];
+                    binheap_insert(&heapcell,temp2);
+                }
+        }
+         if(mapArray[(*temp).yloc][(*temp).xloc-1]!='-' || mapArray[(*temp).yloc][(*temp).xloc-1]!='|'){/* left */
+
+
+                 alt = getWeight(hardnessArray[tempy][tempx])+wallDistanceGrid[tempy][tempx].distance;
+                if(wallDistanceGrid[tempy][tempx-1].distance>alt){
+                    wallDistanceGrid[tempy][tempx-1].distance=alt;
+                    distanceCell *temp3;
+                    temp3 = &wallDistanceGrid[tempy][tempx-1];
+                    binheap_insert(&heapcell,temp3);
+                }
+        }
+        if(mapArray[(*temp).yloc-1][(*temp).xloc+1]!='-' || mapArray[(*temp).yloc-1][(*temp).xloc+1]!='|'){/* top right */
+
+
+                alt = getWeight(hardnessArray[tempy][tempx])+wallDistanceGrid[tempy][tempx].distance;
+                if(wallDistanceGrid[tempy-1][tempx+1].distance>alt){
+                    wallDistanceGrid[tempy-1][tempx+1].distance=alt;
+                    distanceCell *temp4;
+                    temp4 = &wallDistanceGrid[tempy-1][tempx+1];
+                    binheap_insert(&heapcell,temp4);
+
+                }
+
+
+        }
+        if(mapArray[(*temp).yloc-1][(*temp).xloc-1]!='-' || mapArray[(*temp).yloc-1][(*temp).xloc-1]=='|'){/* top left */
+
+
+                alt = getWeight(hardnessArray[tempy][tempx])+wallDistanceGrid[tempy][tempx].distance;
+                if(wallDistanceGrid[tempy-1][tempx-1].distance>alt){
+                    wallDistanceGrid[tempy-1][tempx-1].distance=alt;
+                    distanceCell *temp5;
+                    temp5 = &wallDistanceGrid[tempy-1][tempx-1];
+                   binheap_insert(&heapcell,temp5);
+                }
+
+
+        }
+        if(mapArray[(*temp).yloc+1][(*temp).xloc-1]!='-' || mapArray[(*temp).yloc+1][(*temp).xloc-1]!='|'){/* bottomLeft left */
+
+
+                 alt = getWeight(hardnessArray[tempy][tempx])+wallDistanceGrid[tempy][tempx].distance;
+                if(wallDistanceGrid[tempy+1][tempx-1].distance>alt){
+                    wallDistanceGrid[tempy+1][tempx-1].distance=alt;
+                    distanceCell *temp6;
+                    temp6 = &wallDistanceGrid[tempy+1][tempx-1];
+                    binheap_insert(&heapcell,temp6);
+
+                }
+
+
+        }
+        if(mapArray[(*temp).yloc+1][(*temp).xloc+1]!='-' || mapArray[(*temp).yloc+1][(*temp).xloc+1]!='|'){/* bottom right */
+
+
+                 alt = getWeight(hardnessArray[tempy][tempx])+wallDistanceGrid[tempy][tempx].distance;
+                if(wallDistanceGrid[tempy+1][tempx+1].distance>alt){
+                    wallDistanceGrid[tempy+1][tempx+1].distance=alt;
+                    distanceCell *temp7;
+                    temp7 = &wallDistanceGrid[tempy+1][tempx+1];
+                    binheap_insert(&heapcell,temp7);
+
+                }
+        }
+
+
+    }
 }
 void init(){
    for(int i=0; i<X; i++){
        for(int j=0; j<Y; j++){
         if(i==0 || i==X-1){
         mapArray[i][j] = horizontalWall;
-        hardnessArray[i][j] = (rand() % (254)) + 1;
+        hardnessArray[i][j] = (rand() % (243)) + 2;
         }
         else if(j==0 || j==Y-1){
         mapArray[i][j] = verticalWall;
-        hardnessArray[i][j] = (rand() % (254)) + 1;
+        hardnessArray[i][j] = (rand() % (243)) + 2;
         }
         else{
         mapArray[i][j] = rock;
-        hardnessArray[i][j] = (rand() % (254)) + 1;
+        hardnessArray[i][j] = (rand() % (243)) + 2;
         }
      }
    }
@@ -498,7 +523,7 @@ int loadGame(){
     char *home;
     home = (char*) malloc(sizeof(char)*100);
     strcpy(home,getenv("HOME"));
-    strcat(home,"/work/test_dungeon_files/");
+    strcat(home,"/Desktop/327/work/test_dungeon_files/");
     strcat(home,"104.rlg327");
     f = fopen(home,"r");
     if(!f){
@@ -582,20 +607,25 @@ int loadGame(){
 void printDistanceGridPlus(){
   for(int i=0; i<21; i++){
     for (int j=0; j<80; j++){
-        int value = wallDistanceGrid[i][j].distance;
-        value = value % 10;
-        printf("%d", value);
+        char temp = mapArray[i][j];
+
+        if((temp == '.') | (temp == '#') | (temp == ' ')){
+          int value = wallDistanceGrid[i][j].distance;
+          value = value % 10;
+          printf("%d", value);
+      }
+        else if(temp == '@'){
+          printf("%c", '@');
+        }
     }
     printf("\n");
   }
 }
 
 void printHardness(){
-  for(int i=0; i<21; i++){
-    for (int j=0; j<80; j++){
-        printf("%d",hardnessArray[i][j]);
+  for(int i=0; i<80; i++){
+        printf("%d",hardnessArray[9][i]);
         printf("%c",' ');
-    }
-    printf("\n");
+        printf("\n");
   }
 }

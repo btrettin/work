@@ -179,6 +179,8 @@ int32_t compare_int(const void *key, const void *with)
 int32_t compare_cell(const void *key,const void *with){
   return *(const distanceCell *) key->distance - *(const distanceCell *) with->distance;
 }
-
+int32_t compare_monster(const void *key,const void *with){
+  return (*(const Monster *) key).roundVal - (*(const Monster *) with).roundVal;
+}
 
 #endif
