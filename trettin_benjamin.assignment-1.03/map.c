@@ -440,10 +440,11 @@ void init(){
 
 int saveGame(){
     FILE *f;
-    char *home = getenv("HOME");
-    strcat(home,"/work/test_dungeon_files/");
-    strcat(home,"104.rlg327");
-    f = fopen(home,"w");
+    char *home;
+    home = (char*) malloc(sizeof(char)*100);
+    strcpy(home,getenv("HOME"));
+    strcat(home,"/rlg327/");
+    strcat(home,"dungeon");
     if(!f){
       printf("could not write file\n");
       return 0;
