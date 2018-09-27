@@ -525,7 +525,7 @@ int loadGame(){
     strcpy(home,getenv("HOME"));
     strcat(home,"/rlg327/");
     strcat(home,"dungeon");
-    f= fopen(home,"r");
+    f = fopen(home,"r");
     if(!f){
         printf("cant open file");
         return 0;
