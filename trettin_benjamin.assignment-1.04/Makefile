@@ -8,4 +8,3 @@ All:
 
 clean:
 	rm -f dungeonGame
-it
