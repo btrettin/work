@@ -1,3 +1,92 @@
+commit 36
+Author: Benjamin Trettin
+Date:   wed oct 4 16:43:17 2018 -0500
+
+    updated changelog and readme
+
+  trettin_benjamin.assignment-1.04/CHANGELOG.txt      |  73 +++++++++++++++++
+  trettin_benjamin.assignment-1.04/README.md     |  6 +++---
+  2 files changed, 76 insertions(+), 3 deletions(-)
+
+commit 35
+Author: Benjamin Trettin
+Date:   tues oct 3 13:11:41 2018 -0500
+
+    fixed some final bugs with pc and monster and added to monster.h
+
+  trettin_benjamin.assignment-1.04/monster.c      |  144 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.04/monster.h      |  3 +++
+  2 files changed, 143 insertions(+), 4 deletions(-)
+
+  commit 34
+  Author: Benjamin Trettin
+  Date:   tues oct 1 23:21:44 2018 -0500
+
+      moved a lot of the map info to a gameMap.h file
+
+    trettin_benjamin.assignment-1.04/gameMap.h      |  60 ++++++++++++++++++
+    trettin_benjamin.assignment-1.04/map.c     |  55 -----------------
+    2 files changed, 60 insertions(+), 55 deletions(-)
+
+
+commit 33
+Author: Benjamin Trettin
+Date:   tues oct 3 10:22:52 2018 -0500
+
+    Fixed some bugs with the monster attributes and some tunnelling
+
+  trettin_benjamin.assignment-1.04/monster.c     |  131 ++++++++++++++++++------
+  1 file changed, 121 insertions(+), 10 deletions(-)
+
+commit 32
+Author: Benjamin Trettin
+Date:   mon oct 2 15:23:02 2018 -0500
+
+    added more abilities for the monster in many functions
+
+  trettin_benjamin.assignment-1.04/monster.c     | 258 ++++++++++++++++++++++
+  1 file changed 258 insertions(+)
+
+commit 31
+Author: Benjamin Trettin
+Date:   mon oct 2 12:32:12 2018 -0500
+
+    Added nummon switch in dungeongame
+
+ trettin_benjamin.assignment-1.04/dungeonGame.c      | 18 ++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+commit 30
+Author: Benjamin Trettin
+Date:   Sat oct 1 13:25:07 2018 -0500
+
+    Added methods for monster to travel
+
+ trettin_benjamin.assignment-1.04/monster.c               |   28 ++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+commit 29
+Author: Benjamin Trettin
+Date:   sun sep 30 5:12:51 2018 -0500
+
+    Implemented monster in the mapinit as well as the heap for it
+
+  trettin_benjamin.assignment-1.04/dungeonGame.c     |  4 ++++
+  trettin_benjamin.assignment-1.04/map.c     |  25 +++++++++++++++++++++
+  trettin_benjamin.assignment-1.04/monster.c      |  32 ++++++++++++++++++++---
+  trettin_benjamin.assignment-1.04/monster.h    |  5 +++++
+  4 files changed, 60 insertions(+), 3 deletions
+
+commit 28
+Author: Benjamin Trettin
+Date:   thur sep 27 10:52:21 2018 -0500
+
+    Added monster.c and monster.h files with some basic implementation
+
+  trettin_benjamin.assignment-1.04/monster.c      |  45 +++++++++++++++++++++++
+  trettin_benjamin.assignment-1.04/monster.h      |  3 +++
+  2 files added, 48 insertions(+)
+
 commit 27
 Author: Benjamin Trettin
 Date:   wed sep 26 18:54:21 2018 -0500
